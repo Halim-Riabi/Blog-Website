@@ -7,6 +7,8 @@ const app = express();
 
 app.use('/article', articleApi);
 
+app.use('/getimage', express.static('.uploads'));
+
 app.listen(3001, ()=>{
     console.log('server work');
 })

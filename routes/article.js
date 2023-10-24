@@ -44,11 +44,49 @@ router.post('/ajout', upload.any('image'), (req, res)=>{
 
 router.get('/all', (req, res)=>{
 
+    Article.find({})
+    .then(
+        (articles)=>{
+            res.status(200).send(articles);
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err);
+        }
+    )
+
 })
 router.get('/getbyid/:id', (req, res)=>{
 
+    let id = req.params.id
+    Article.findOne({_id : id})
+    .then(
+        (articles)=>{
+            res.status(200).send(articles);
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err);
+        }
+    )
+
 })
 router.get('/getbyidauthor/:id', (req, res)=>{
+
+    let id = req.params.id
+    Article.find({idAuthor : id})
+    .then(
+        (articles)=>{
+            res.status(200).send(articles);
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err);
+        }
+    )
 
 })
 router.delete('/supprimer/:id', (req, res)=>{
