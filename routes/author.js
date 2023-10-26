@@ -5,6 +5,7 @@ const router = express.Router();
 const Author = require('../models/author');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 filename='';
 const mystorage = multer.diskStorage({
@@ -49,6 +50,34 @@ router.post('/register', upload.any('image'),(req, res)=>{
 })
 
 router.post('/login', (req, res)=>{
+
+    let data = req.body;
+
+    Author.findOne({email : data.email})
+    .then(
+        (author)=>{
+            let valid = bcrypt.compareSync(data.password, author.password);
+            if(!valid){
+                res.send("email or password not valid !");
+            }
+            else{
+
+                let payload = {
+                    _id: author._id,
+                    email: author.email,
+                    fullname: author.name +' '+ author.lastname
+                }
+                let token = jwt.sign(payload, '123456789');
+                res.send({mytoken : token})
+
+            }
+        }
+    )
+    .catch(
+        err=>{
+            res.send(err);
+        }
+    )
 
 })
 

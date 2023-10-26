@@ -5,6 +5,7 @@ require('./config/connect');
 
 
 const app = express();
+app.use(express.json());
 
 app.use('/article', articleApi);
 app.use('/author', authorApi);
