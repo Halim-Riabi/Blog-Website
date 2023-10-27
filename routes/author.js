@@ -83,19 +83,77 @@ router.post('/login', (req, res)=>{
 
 router.get('/all', (req, res)=>{
 
+    Author.find({})
+    .then(
+        (authors)=>{
+            res.status(200).send(authors)
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err);
+        }
+    )
+
 })
 
 router.get('/getbyid/:id', (req, res)=>{
 
+    let id = req.params.id
+    Author.findOne({_id:id})
+    .then(
+        (author)=>{
+            res.status(200).send(author);
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err);
+        }
+    )
+
 })
 
 router.delete('/supprimer/:id', (req, res)=>{
+    let id = req.params.id
+    Author.findByIdAndDelete({_id:id})
+    .then(
+        (author)=>{
+            res.status(200).send(author);
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err);
+        }
+    )
 
 })
 
-router.put('/update/:id', (req, res)=>{
+// router.put('/update/:id', (req, res)=>{
 
-})
+//     let id = req.params.id;
+//     let data = req.body;
+//     data.tags = data.tags.split(',');
+
+//     if(filename.length > 0){
+//         data.image = filename;
+//     }
+
+//     Author.findByIdAndUpdate({_id:id}, data)
+//     .then(
+//         (author)=>{
+//             filename = '';
+//             res.status(200).send(author);
+//         }
+//     )
+//     .catch(
+//         (err)=>{
+//             res.status(400).send(err);
+//         }
+//     )
+
+// })
 
 
 module.exports = router;

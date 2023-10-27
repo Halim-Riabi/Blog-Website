@@ -10,7 +10,7 @@ app.use(express.json());
 app.use('/article', articleApi);
 app.use('/author', authorApi);
 
-app.use('/getimage', express.static('.uploads'));
+app.use('/getimage', express.static('./uploads'));
 
 app.listen(3001, ()=>{
     console.log('server work');
